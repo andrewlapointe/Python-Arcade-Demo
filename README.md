@@ -9,9 +9,7 @@ would be a more effective member of the team.
 
 This game is a simple endless game where the player must dodge falling rocks.
 
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the game being played and a walkthrough of the code.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/oU37jsmSyVY)
 
 # Development Environment
 
@@ -30,3 +28,4 @@ While I have no plans to develope this further, if I were to do it again I would
 - Create custom graphics
 - Add a score system
 - Add a game over screen/start menu
+- Animate the players motion
