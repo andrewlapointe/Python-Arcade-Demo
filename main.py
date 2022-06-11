@@ -10,7 +10,7 @@ CHARACTER_SCALING = 1
 TILE_SCALING = 0.5
 COIN_SCALING = 0.5
 
-PROJECTILE_SPEED = 3
+PROJECTILE_SPEED = 3.5
 PROJECTILE_SPRITE_LIST = [":resources:images/space_shooter/meteorGrey_big1.png", ":resources:images/space_shooter/meteorGrey_big2.png", ":resources:images/space_shooter/meteorGrey_big3.png", ":resources:images/space_shooter/meteorGrey_big4.png"]
 
 PLAYER_MOVEMENT_SPEED = 5
@@ -35,9 +35,14 @@ class gameWindow(arcade.Window):
         self.player_list = None
 
         self.player_sprite = None
+        self.current_texture = 0
 
         self.view_bottom = 0
         self.view_left = 0
+
+        self.audio_playing = False
+
+        self.speed_mod = 1
 
     def setup(self):
         self.player_list = arcade.SpriteList()
@@ -86,13 +91,19 @@ class gameWindow(arcade.Window):
     def on_update(self, delta_time: float):
         self.physics_engine.update()
 
-        for projectile in self.projectile_list:
-            projectile.center_y -= PROJECTILE_SPEED
+        if not self.audio_playing:
+            audio = arcade.load_sound("earthworm-jim-music-snes-buttville-the-queens-lair.mp3", False)
+            arcade.play_sound(audio)
+            self.audio_playing = True
 
-            if projectile.center_y < -5:
+
+        for projectile in self.projectile_list:
+            projectile.center_y -= PROJECTILE_SPEED * self.speed_mod
+
+            if projectile.center_y < -6:
                 self.projectile_list.remove(projectile)
         
-        if len(self.projectile_list) < 8:
+        if len(self.projectile_list) < 14:
             new_projectile = arcade.Sprite(PROJECTILE_SPRITE_LIST[random.randint(0, len(PROJECTILE_SPRITE_LIST) - 1)], TILE_SCALING)
             new_projectile.position = [random.randint(30, SCREEN_WIDTH - 30), random.randint(800, 1400)]
             new_projectile.angle = random.randint(0, 180)
@@ -104,6 +115,15 @@ class gameWindow(arcade.Window):
             if colliding: break
         
         if colliding: self.close()
+
+    def player_animation(self):
+        self.current_texture += 1
+        if self.current_texture > 7:
+            self.current_texture = 0
+        self.texture = self.walk_textures[self.current_texture][
+            self.character_face_direction
+        ]
+
 
 
     def on_draw(self):
