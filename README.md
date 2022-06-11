@@ -1,7 +1,3 @@
-# Python-Arcade-Demo
-
-Learning python arcade. This will be a demo of basic functionality.
-
 # Overview
 
 I am currently (as I write this) on a team developing a game in python with the arcade library. This program was a quick crash course in the arcade library. I wanted to test the basic functionalities so that I
